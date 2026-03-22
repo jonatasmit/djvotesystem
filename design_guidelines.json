@@ -1,0 +1,98 @@
+{
+  "theme_strategy": "dark_only",
+  "typography": {
+    "fonts": [
+      {
+        "name": "Anton",
+        "type": "heading",
+        "google_font": "Anton",
+        "description": "Massive, bold, brutalist for headlines, representing the heavy beat of eletrofunk."
+      },
+      {
+        "name": "Space Mono",
+        "type": "body",
+        "google_font": "Space Mono",
+        "description": "Technical and raw. Creates contrast with Anton. Perfect for data like CPF, form labels, and rankings."
+      }
+    ],
+    "guidelines": "Headings MUST be huge, uppercase, and have tight tracking (`tracking-tighter`). Body text is monospace for a 'raw data/hacker/favela cyberpunk' aesthetic. Never use standard SaaS Inter."
+  },
+  "colors": {
+    "background": "#050505",
+    "surface": "#121212",
+    "primary": "#E01A4F",
+    "secondary": "#00FFFF",
+    "accent_purple": "#8A2BE2",
+    "whatsapp_green": "#25D366",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#A1A1AA",
+    "guidelines": "No soft gradients. Use sharp, high-contrast neon elements against deep void black. Focus on purple, magenta, neon cyan, and black based on the provided hero background."
+  },
+  "visual_enhancers": [
+    "Glitch text effects on hover for headings.",
+    "Marquee running text (`ELETROFUNK - MANDELÃO - CACHORRADA`) as section dividers using `react-fast-marquee`.",
+    "1px neon borders with `box-shadow` to create glow effects on cards.",
+    "Noise texture overlay across the entire app (`pointer-events-none`) to avoid digital flatness."
+  ],
+  "layouts": {
+    "hero": "100vh full-screen. Background image with deep purple/black gradient overlay to ensure text readability. Huge 'Anton' typography. Logo at top center. Call-to-action button to enter/vote.",
+    "voting_section": "Bento grid structure. Left side: Lead capture form (Nome, CPF, Email, WhatsApp, Estado) heavily styled, right side: Live Ranking of DJs with monospace numbers.",
+    "dj_profiles": "Asymmetrical grid of DJ cards. Images inside harsh rectangular crops. Hovering the card shifts it and changes border to cyan or magenta. SEO optimized headings.",
+    "events": "Brutalist list layout. Massive dates taking up 30% of width, event details, and a loud WhatsApp button for tickets.",
+    "blog": "Grid of articles for SEO. Title overlaid on dark images with a neon underline.",
+    "footer": "Massive typography. CNPJ and Instagram clearly visible. Darkest background."
+  },
+  "motion": {
+    "framer_motion_defaults": {
+      "initial": { "opacity": 0, "y": 20 },
+      "animate": { "opacity": 1, "y": 0 },
+      "transition": { "duration": 0.4, "ease": "easeOut" }
+    },
+    "guidelines": "Sharp, fast animations. Use `framer-motion` for scroll reveals. Avoid slow/soft ease-in-out. The motion should feel like a strobe light—punchy."
+  },
+  "component_rules": {
+    "forms": "Use Shadcn UI. Inputs must have black backgrounds, 1px neon border (magenta or cyan) on focus. No rounded corners (`rounded-none`).",
+    "buttons": "Brutalist block buttons. Sharp corners. Hover state: invert colors (e.g., text black, bg magenta) and add heavy drop shadow.",
+    "cards": "Transparent black background `bg-black/40`, backdrop blur, 1px border. No soft shadows, use harsh offset shadows if any."
+  },
+  "libraries": [
+    "framer-motion (for scroll reveals and glitch animation)",
+    "lucide-react (icons)",
+    "react-fast-marquee (for running ticker tapes)",
+    "sonner (for toast notifications after voting)"
+  ],
+  "accessibility": {
+    "contrast": "Ensure white text over the neon colors passes APCA/WCAG. Use text shadows when text is over images.",
+    "focus": "All focus states should have a 2px offset solid cyan ring.",
+    "audio": "Audio MUST NOT autoplay without user interaction. Provide a clear 'PLAY AUDIO' or ensure the first interaction (like clicking a button on the hero) starts it."
+  },
+  "media_assets": {
+    "background_hero": "https://customer-assets.emergentagent.com/job_cf83a940-d7dd-4a2a-b1d7-b5350862253d/artifacts/4e3g8cul_IMG_0359.png",
+    "logo": "https://customer-assets.emergentagent.com/job_cf83a940-d7dd-4a2a-b1d7-b5350862253d/artifacts/ia7e6z10_AB554670-F09D-4814-9E72-AEAD33654EC7.jpeg",
+    "dj_placeholders": [
+      "https://images.unsplash.com/photo-1583067525792-a434e3468723?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1755545622574-abd0793fc7f9?auto=format&fit=crop&q=80"
+    ],
+    "event_backgrounds": [
+      "https://images.unsplash.com/photo-1694676210590-b1de7d741b81?auto=format&fit=crop&q=80",
+      "https://images.pexels.com/photos/5143168/pexels-photo-5143168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    ]
+  },
+  "specific_instructions": [
+    "Implement an audio element that plays a sample of mandelão/eletrofunk upon the user's first click on the document.",
+    "Add 'ELETROFUNK', 'CACHORRADA', 'FUNK RAVE' heavily into meta tags and visually in a scrolling marquee for SEO.",
+    "The voting form must capture Nome, CPF, Email, WhatsApp, Estado. Use Shadcn components for this.",
+    "Ticket purchases link directly to WhatsApp using standard api.whatsapp.com links.",
+    "Footer MUST contain CNPJ: 21.534.683-0001/37 and Instagram: @jonatasbeirao.",
+    "Remove any Emergent badges from the layout.",
+    "No generic rounded SaaS UI. Keep it sharp (`rounded-none`), aggressive, and high contrast."
+  ],
+  "universal_guidelines_for_main_agent": [
+    "Do not apply `transition: all` anywhere.",
+    "Do not center align `.App`.",
+    "Use modern pill or sharp styles for buttons depending on theme (here, sharp brutalist).",
+    "Every interaction needs micro-animations.",
+    "Create depth with z-index and glassmorphism.",
+    "Add data-testid to all interactive elements."
+  ]
+}
