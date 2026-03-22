@@ -1,34 +1,210 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0.3) 0%,
+    rgba(5, 5, 5, 0.6) 50%,
+    rgba(5, 5, 5, 0.95) 100%
+  );
 }
 
-.App-link {
-    color: #61dafb;
+/* Marquee */
+.marquee-container {
+  background: var(--primary-magenta);
+  padding: 12px 0;
+  overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.marquee-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
 }
+
+/* Cards */
+.dj-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.dj-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--secondary-cyan);
+}
+
+.dj-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 255, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dj-card:hover::before {
+  opacity: 1;
+}
+
+/* Event card */
+.event-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateX(4px);
+  box-shadow: -4px 0 0 var(--primary-magenta);
+}
+
+/* Blog card */
+.blog-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card img {
+  transition: transform 0.5s ease;
+}
+
+.blog-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Progress bar animation */
+@keyframes progressGrow {
+  from { width: 0; }
+}
+
+.progress-bar {
+  animation: progressGrow 1s ease-out forwards;
+}
+
+/* Pulse animation for WhatsApp button */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+}
+
+.whatsapp-btn {
+  animation: pulse 2s infinite;
+}
+
+/* Audio player */
+.audio-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-magenta);
+  border: 1px solid var(--secondary-cyan);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.audio-toggle:hover {
+  transform: scale(1.1);
+  background: var(--secondary-cyan);
+}
+
+.audio-toggle.playing {
+  background: var(--whatsapp-green);
+}
+
+/* Voting form */
+.voting-form input,
+.voting-form select {
+  background: rgba(18, 18, 18, 0.8);
+  border: 1px solid var(--primary-magenta);
+  color: var(--text-primary);
+  padding: 12px 16px;
+  font-family: 'Space Mono', monospace;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.voting-form input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Ranking number */
+.ranking-number {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--secondary-cyan);
+  text-shadow: 0 0 20px var(--secondary-cyan);
+}
+
+/* Section divider */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-magenta), transparent);
+}
+
+/* Footer */
+.footer-link {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--secondary-cyan);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 100svh;
+  }
+  
+  .ranking-number {
+    font-size: 2rem;
+  }
+  
+  .marquee-text {
+    font-size: 1rem;
+  }
+}
+
+/* Animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
