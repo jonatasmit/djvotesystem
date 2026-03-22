@@ -12,6 +12,7 @@ const API = `${BACKEND_URL}/api`;
 const WHATSAPP_NUMBER = "5521972232170";
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_cf83a940-d7dd-4a2a-b1d7-b5350862253d/artifacts/ia7e6z10_AB554670-F09D-4814-9E72-AEAD33654EC7.jpeg";
 const BG_URL = "https://customer-assets.emergentagent.com/job_cf83a940-d7dd-4a2a-b1d7-b5350862253d/artifacts/4e3g8cul_IMG_0359.png";
+// Using the video file as audio source - browsers can extract audio from video containers
 const AUDIO_URL = "https://customer-assets.emergentagent.com/job_cachorrada-vote/artifacts/30jm4hwl_2d8da123-c8ea-4e2f-a392-42d298f4e176.mov";
 
 const ESTADOS = [
@@ -45,6 +46,7 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const audioRef = useRef(null);
+  const [audioError, setAudioError] = useState(false);
 
   useEffect(() => {
     initData();
@@ -79,28 +81,31 @@ function App() {
   const handleFirstInteraction = () => {
     if (!hasInteracted) {
       setHasInteracted(true);
-      if (audioRef.current) {
+      if (audioRef.current && !audioError) {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
         }).catch(() => {
-          // Autoplay blocked
+          // Autoplay blocked or audio error
+          setAudioError(true);
         });
       }
     }
   };
 
-  const toggleAudio = () => {
-    if (audioRef.current) {
+  const toggleAudio = (e) => {
+    e.stopPropagation();
+    if (audioRef.current && !audioError) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(() => setAudioError(true));
       }
       setIsPlaying(!isPlaying);
     }
   };
 
-  const handleVoteClick = (dj) => {
+  const handleVoteClick = (e, dj) => {
+    e.stopPropagation();
     setSelectedDj(dj);
     setShowVoteModal(true);
   };
@@ -157,18 +162,28 @@ function App() {
       <Toaster position="top-center" />
       <div className="noise-overlay" />
       
-      {/* Audio */}
-      <audio ref={audioRef} src={AUDIO_URL} loop />
-      
-      {/* Audio Toggle */}
-      <button
-        onClick={toggleAudio}
-        className={`audio-toggle ${isPlaying ? 'playing' : ''}`}
-        data-testid="audio-toggle"
-        aria-label={isPlaying ? "Pausar música" : "Tocar música"}
+      {/* Audio - with error handling for unsupported formats */}
+      <audio 
+        ref={audioRef} 
+        loop 
+        onError={() => setAudioError(true)}
+        preload="none"
       >
-        {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-      </button>
+        <source src={AUDIO_URL} type="video/quicktime" />
+        <source src={AUDIO_URL} type="audio/mp4" />
+      </audio>
+      
+      {/* Audio Toggle - only show if audio works */}
+      {!audioError && (
+        <button
+          onClick={toggleAudio}
+          className={`audio-toggle ${isPlaying ? 'playing' : ''}`}
+          data-testid="audio-toggle"
+          aria-label={isPlaying ? "Pausar música" : "Tocar música"}
+        >
+          {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+        </button>
+      )}
 
       {/* Hero Section */}
       <section className="hero-section" data-testid="hero-section">
@@ -318,7 +333,7 @@ function App() {
                       </div>
                     </div>
                     <button
-                      onClick={() => handleVoteClick(dj)}
+                      onClick={(e) => handleVoteClick(e, dj)}
                       className="btn-brutal w-full bg-[#E01A4F] text-white py-2 text-sm"
                       data-testid={`vote-btn-${dj.slug}`}
                     >
@@ -400,7 +415,7 @@ function App() {
                         </a>
                       )}
                       <button
-                        onClick={() => handleVoteClick(dj)}
+                        onClick={(e) => handleVoteClick(e, dj)}
                         className="ml-auto btn-brutal bg-[#E01A4F] text-white px-4 py-2 text-sm"
                         data-testid={`profile-vote-btn-${dj.slug}`}
                       >
